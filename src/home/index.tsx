@@ -3,7 +3,7 @@ import { DatePicker } from "../components/date-picker"
 
 export const App = () => {
   return (
-    <div className="flex itesm justify-center h-screen w-screen p-6 bg-secondary">
+    <div className="flex itesm justify-center h-screen w-screen p-6 bg-secondary-def">
       <div className="flex h-full w-[1440px] p-6 gap-6 rounded-2xl bg-primary">
 
         <nav className="flex flex-col w-[30%] items-center gap-6">
