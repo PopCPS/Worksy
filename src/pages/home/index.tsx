@@ -1,30 +1,45 @@
-import { CheckCircle2, Plus, Search, User } from "lucide-react"
-import { DatePicker } from "../components/date-picker"
+import { CheckCircle2, Github, Linkedin, Plus, Search, User } from "lucide-react"
+import { DatePicker } from "../../components/date-picker"
+import { Button } from "../../components/button"
+import { Logo } from "../../components/logo"
 
-export const App = () => {
+export const Home = () => {
   return (
     <div className="flex itesm justify-center h-screen w-screen p-6 bg-secondary-def">
       <div className="flex h-full w-[1440px] p-6 gap-6 rounded-2xl bg-primary">
 
         <nav className="flex flex-col w-[30%] items-center gap-6">
-          <img src="/Logo.svg" alt="logo" />
-          <ul className="flex flex-col items-center text-xl w-full gap-4">
-            <li className="w-full">
-              <button className="w-full py-3 rounded-2xl bg-white">
-                Profissional
-              </button>
-            </li>
-            <li className="w-full">
-              <button className="w-full py-3 rounded-2xl bg-white">
-                Pessoal
-              </button>
-            </li>
-            <li>
-              <button className="flex items-center justify-center p-3 rounded-2xl bg-white">
-                <Plus />
-              </button>
-            </li>
-          </ul>
+          <Logo isPrimary={false} />
+          <div className="flex flex-col h-full justify-between">
+            <ul className="flex flex-col items-center text-xl w-full gap-4">
+              <li className="w-full">
+                <Button variant="secondary">
+                  Profissional
+                </Button>
+              </li>
+              <li className="w-full">
+                <Button variant="secondary">  
+                  Pessoal
+                </Button>
+              </li>
+              <li className="flex items-center justify-center w-full">
+                <Button variant="secondary" width="tiny">  
+                  <Plus />
+                </Button>
+              </li>
+            </ul>
+            <div className="space-y-5">
+              <div className="flex justify-center gap-4">
+                <a className="block size-fit p-2.5 rounded-[50%] bg-secondary-def" href="https://linkedin.com/in/artur-paz-sousa" target="blank">
+                  <Linkedin size={30} className="text-primary" />
+                </a>
+                <a className="block size-fit p-2.5 rounded-[50%] bg-secondary-def" href="https://github.com/PopCPS" target="blank">
+                  <Github size={30} className="text-primary" />
+                </a>
+              </div>
+              <span className="block">Desenvolvido por Artur Coelho</span>
+            </div>
+          </div>
         </nav>
 
         <div className="flex flex-col w-full space-y-5">
