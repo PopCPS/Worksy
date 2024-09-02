@@ -1,16 +1,33 @@
 import { ComponentProps, ReactNode } from "react"
+import { VariantProps, tv } from "tailwind-variants"
 
-interface InputProps extends ComponentProps<'input'> {
+const inputVariants = tv({
+  base: "flex items-center justify-between w-[328px] px-4 h-16 rounded-2xl bg-secondary-dark",
+
+  variants: {
+    error: {
+      true: 'border border-danger',
+      false: 'border border-secondary-dark',
+    },
+  },
+
+  defaultVariants: {
+    error: false,
+  } 
+})
+
+interface InputProps extends ComponentProps<'input'>, VariantProps<typeof inputVariants> {
   children: ReactNode
 }
 
 export const Input = ({
   children,
+  error,
   ...props
 }: InputProps) => {
   return (
-    <div className="flex items-center justify-between w-[328px] h-16 p-4 rounded-2xl bg-secondary-dark">
-      <input {...props} className="bg-transparent flex-1 focus:outline-none" />
+    <div className={inputVariants({ error })}>
+      <input {...props} className="bg-transparent py-4 flex-1 focus:outline-none" />
       {children}
     </div>
   )

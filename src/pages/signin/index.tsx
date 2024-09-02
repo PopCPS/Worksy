@@ -3,13 +3,46 @@ import { Button } from "../../components/button"
 import { Input } from "../../components/input"
 import { Logo } from "../../components/logo"
 import { useNavigate } from "react-router-dom"
+import { FormEvent, useState } from "react"
+import { api } from "../../lib/axios"
 
 export const Signin = () => {
 
   const navigate = useNavigate()
 
+  const [ email, setEmail ] = useState<string | null>(null)
+  const [ password, setPassword ] = useState<string | null>(null)
+  const [ isEmailError, setIsEmailError ] = useState<boolean>(false)
+  const [ isPasswordError, setIsPasswordError ] = useState<boolean>(false)
+
+  let isFormError = false
+
   const navToSignup = () => {
     navigate('/signup')
+  }
+
+  const signin = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    isFormError = false
+
+    if(!email) {
+      setIsEmailError(true)
+    }
+    if(!password) {
+      setIsPasswordError(true)
+    }
+
+    if(isFormError) {
+      return
+    }
+    
+    await api.post('/api/login', {
+      email,
+      password  
+    }).catch(response => {
+      console.log(response)
+    })
+
   }
 
   return (
@@ -17,12 +50,24 @@ export const Signin = () => {
       <div className="h-[632px] w-[392px] p-4 rounded-2xl bg-primary">
         <div className="flex flex-col justify-center items-center gap-10 h-full w-full rounded-2xl px-4 bg-secondary-def">
           <Logo isPrimary={true} />
-          <form className="flex flex-col items-center justify-center gap-6">
+          <form onSubmit={e => signin(e)} className="flex flex-col items-center justify-center gap-6">
             <div className="space-y-2.5 text-white">
-              <Input type="email" placeholder="E-mail">
+              <Input 
+                onChange={e => setEmail(e.currentTarget.value)} 
+                onFocus={() => setIsEmailError(false)}
+                error={isEmailError} 
+                type="email" 
+                placeholder="E-mail"
+              >
                 <Mail className="text-white" />
               </Input>
-              <Input type="password" placeholder="Senha">
+              <Input 
+                onChange={e => setPassword(e.currentTarget.value)} 
+                onFocus={() => setIsPasswordError(false)}
+                error={isPasswordError} 
+                type="password" 
+                placeholder="Senha"
+              >
                 <Lock className="text-white" />
               </Input>
             </div>
