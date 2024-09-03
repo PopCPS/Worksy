@@ -1,6 +1,8 @@
 import dayjs from "dayjs"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { RefObject, useEffect, useRef, useState } from "react"
+import { useAppDispatch } from "../store/hooks"
+import { set_day, set_month } from "../store/reducers/dataReducer"
 
 interface DayProps {
   day: number
@@ -12,6 +14,8 @@ const Day = ({
   daysRef,
 }: DayProps) => {
 
+  const dispatch = useAppDispatch()
+
   return (
     <span  
       onClick={() => {
@@ -21,6 +25,7 @@ const Day = ({
             behavior: 'smooth'
           });
         }
+        dispatch(set_day(day))
       }}
       className="flex items-center justify-center size-12 z-10 text-shadow cursor-pointer focus:outline-none"
     >
@@ -100,6 +105,7 @@ const Months = ({
   setMonthIndex
 }: MonthProps) => {
 
+  const dispatch = useAppDispatch()
   const monthContainer = useRef<HTMLDivElement | null>(null)
 
   const months = [
@@ -124,12 +130,14 @@ const Months = ({
         left: 256 * (monthIndex+1),
         behavior: 'smooth'
       });
+      dispatch(set_month(monthIndex+2))
     }
   }
 
   const scrollPreviousMonth = (monthIndex: number) => {
     if(monthIndex >= 1) {
       setMonthIndex(monthIndex-1)
+      dispatch(set_month(monthIndex))
       monthContainer.current?.scrollTo({
         left: 256 * (monthIndex-1),
         behavior: 'smooth'

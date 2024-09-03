@@ -3,13 +3,25 @@ import { Button } from "../../components/button"
 import { Input } from "../../components/input"
 import { Logo } from "../../components/logo"
 import { useNavigate } from "react-router-dom"
-import { FormEvent, useState } from "react"
+import { FormEvent, useEffect, useState } from "react"
 import { api } from "../../lib/axios"
+import { useAppDispatch } from "../../store/hooks"
+import { set_agendas } from "../../store/reducers/dataReducer"
+
+interface agendas {
+    agendas: {
+      id: string,
+      user_id: string,
+      name: string
+    }[]
+}
 
 export const Signin = () => {
 
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
+  const [ loginData, setLoginData ] = useState<agendas | null>(null)
   const [ email, setEmail ] = useState<string | null>(null)
   const [ password, setPassword ] = useState<string | null>(null)
   const [ isEmailError, setIsEmailError ] = useState<boolean>(false)
@@ -27,9 +39,11 @@ export const Signin = () => {
 
     if(!email) {
       setIsEmailError(true)
+      isFormError = true
     }
     if(!password) {
       setIsPasswordError(true)
+      isFormError = true
     }
 
     if(isFormError) {
@@ -39,11 +53,20 @@ export const Signin = () => {
     await api.post('/api/login', {
       email,
       password  
-    }).catch(response => {
-      console.log(response)
+    }).catch(error => {
+      console.log(error)
+    }).then(response => {
+      setLoginData(response.data)
     })
-
   }
+
+  useEffect(() => {
+    if(loginData){
+      dispatch(set_agendas(loginData.agendas))
+      sessionStorage.setItem('agendas', JSON.stringify(loginData.agendas))
+      navigate(`/${loginData.agendas[0].id}`)
+    }
+  }, [ loginData, navigate, dispatch ])
 
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-secondary-def">

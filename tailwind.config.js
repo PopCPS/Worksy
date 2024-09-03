@@ -18,6 +18,7 @@ export default {
           def: '#2C302E',
           dark: '#201c1c',
         },
+        success: '#4BB543',
         danger: '#DB3838',
         white: '#FBFCFF'
       },

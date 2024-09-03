@@ -17,3 +17,7 @@
 .text-shadow {
   text-shadow: -1px -1px 0 #FBFCFF, 1px -1px 0 #FBFCFF, -1px 1px 0 #FBFCFF, 1px 1px 0 #FBFCFF;
 }
+
+input {
+  color-scheme: dark
+}
