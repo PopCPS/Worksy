@@ -12,11 +12,10 @@ export const Home = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
-  if(sessionStorage.getItem('agendas')){
-    dispatch(set_agendas(JSON.parse(sessionStorage.getItem("agendas"))))
-  }
-
   useState(async () => {
+    if(sessionStorage.getItem('agendas')){
+      dispatch(set_agendas(JSON.parse(sessionStorage.getItem("agendas"))))
+    }
     await api.post(
       '/api/ping',
       {},

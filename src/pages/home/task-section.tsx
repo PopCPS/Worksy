@@ -1,4 +1,4 @@
-import { CheckCircle2, Circle, CircleX, Plus, Search } from "lucide-react"
+import { CheckCircle2, Circle, CircleX, Ellipsis, Plus, Search } from "lucide-react"
 import { useState, FormEvent, useEffect } from "react"
 import { Input } from "../../components/input"
 import { Modal } from "../../components/modal"
@@ -95,9 +95,9 @@ export const TaskSection = () => {
 
       <div className="h-px w-full bg-primary" />
 
-      {activities && activities.map(activity => {
+      {activities && activities.length>0 ? activities.map(activity => {
         return (
-          <div key={activity.id} className="w-full">
+          <div key={activity.id} className="w-full group">
             <div className="flex items-center justify-between px-5 w-full h-16 bg-primary rounded-2xl">
               <span className="text-2xl">
                 {activity.title}
@@ -106,6 +106,9 @@ export const TaskSection = () => {
                 <span className="text-right">
                   {dayjs(activity.occurs_at).format('HH:mm')}
                 </span>
+                <button className="hidden  transition-all group-hover:block">
+                  <Ellipsis />
+                </button>
                 {activity.isDone ? (
                   <CheckCircle2 className="text-success" />
                 ) : dayjs().isBefore(activity.occurs_at) ? (
@@ -117,7 +120,11 @@ export const TaskSection = () => {
             </div>  
           </div>
         )
-      })}
+      }) : (
+        <div className="size-full flex items-center justify-center">
+          <h1 className="text-2xl font-bold text-white">Parace que sua agenda está livre para hoje!</h1>
+        </div>
+      )}
 
       
 
