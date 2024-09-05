@@ -9,10 +9,6 @@ export interface agenda {
     name: string
 }
 
-export interface agendas {
-  agendas: agenda[]
-}
-
 export interface user {
   id: string,
   name: string,
