@@ -37,7 +37,6 @@ export const TaskSection = () => {
   const month = useAppSelector(state => state.apiData.month)
   const year = new Date().getFullYear()
   const agendas = useAppSelector(state => state.apiData.agendas)
-  let hasError = false
 
   const closeNewTaskModal = () => {
     setIsNewTaskModalOpen(false)
@@ -63,7 +62,7 @@ export const TaskSection = () => {
 
   const createActivity = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    hasError = false
+    let hasError = false
 
     if(!hour) {
       setHourError(true)
@@ -171,7 +170,10 @@ export const TaskSection = () => {
             size={40} 
             strokeWidth={1} 
             className="text-white" 
-            onClick={() => setIsNewTaskModalOpen(true)}
+            onClick={() => {
+              setSelectedAgendaId(agenda)
+              setIsNewTaskModalOpen(true)
+            }}
           />
         </button>
         <div className="flex gap-4">

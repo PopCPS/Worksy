@@ -1,9 +1,8 @@
 export interface IStates {
   day: number,
   month: number,
-  agendas: agenda | null
+  agendas: agenda[] | null
 }
-
 export interface agenda {
     id: string,
     user_id: string,

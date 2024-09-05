@@ -7,10 +7,13 @@ import { api } from "../../lib/axios"
 import { agenda } from "../../lib/global-states-interface"
 import { Modal } from "../../components/modal"
 import { Input } from "../../components/input"
+import { useAppDispatch } from "../../store/hooks"
+import { set_agendas } from "../../store/reducers/dataReducer"
 
 export const Nav = () => {
 
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const { agenda } = useParams()
   const [ agendas, setAgendas ] = useState<agenda[] | null>(null)
   const [ isNavModalOpen, setIsNavModalOpen ] = useState<boolean>(false)
@@ -37,7 +40,8 @@ export const Nav = () => {
     }, {
       withCredentials: true
     }).then(response => {
-      navigate(`/${response.data}`)
+      dispatch(set_agendas(response.data.agendas))
+      navigate(`/${response.data.id}`)
       closeAgendaModal()
     })
   }

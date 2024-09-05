@@ -93,7 +93,7 @@ export const Signup = () => {
   useEffect(() => {
     if(loginData){
       console.log(loginData)
-      dispatch(set_agendas(loginData))
+      dispatch(set_agendas(loginData.toString()))
       sessionStorage.setItem('agendas', JSON.stringify(loginData))
       navigate(`/${loginData[0].id}`)
     }
