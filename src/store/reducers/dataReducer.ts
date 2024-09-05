@@ -19,7 +19,7 @@ export const date = createSlice({
     set_month: (state, action: PayloadAction<number>) => {
       state.month = action.payload
     },
-    set_agendas: (state, action: PayloadAction<agendas>) => {
+    set_agendas: (state, action: PayloadAction<agendas[]>) => {
       state.agendas = action.payload
     }
   }

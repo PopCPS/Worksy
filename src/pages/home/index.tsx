@@ -13,8 +13,9 @@ export const Home = () => {
   const dispatch = useAppDispatch()
 
   useState(async () => {
-    if(sessionStorage.getItem('agendas')){
-      dispatch(set_agendas(JSON.parse(sessionStorage.getItem("agendas"))))
+    const agendas = sessionStorage.getItem("agendas")
+    if(agendas){
+      dispatch(set_agendas(JSON.parse(agendas)))
     }
     await api.post(
       '/api/ping',

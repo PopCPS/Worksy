@@ -7,21 +7,14 @@ import { FormEvent, useEffect, useState } from "react"
 import { api } from "../../lib/axios"
 import { useAppDispatch } from "../../store/hooks"
 import { set_agendas } from "../../store/reducers/dataReducer"
-
-interface agendas {
-    agendas: {
-      id: string,
-      user_id: string,
-      name: string
-    }[]
-}
+import { agendas } from "../../lib/global-states-interface"
 
 export const Signin = () => {
 
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
-  const [ loginData, setLoginData ] = useState<agendas | null>(null)
+  const [ loginData, setLoginData ] = useState<agendas[] | null>(null)
   const [ email, setEmail ] = useState<string | null>(null)
   const [ password, setPassword ] = useState<string | null>(null)
   const [ isEmailError, setIsEmailError ] = useState<boolean>(false)
@@ -53,18 +46,19 @@ export const Signin = () => {
     await api.post('/api/login', {
       email,
       password  
+    }).then(response => {
+      setLoginData(response.data.agendas)
     }).catch(error => {
       console.log(error)
-    }).then(response => {
-      setLoginData(response.data)
     })
   }
 
   useEffect(() => {
     if(loginData){
-      dispatch(set_agendas(loginData.agendas))
-      sessionStorage.setItem('agendas', JSON.stringify(loginData.agendas))
-      navigate(`/${loginData.agendas[0].id}`)
+      console.log(loginData)
+      dispatch(set_agendas(loginData))
+      sessionStorage.setItem('agendas', JSON.stringify(loginData))
+      navigate(`/${loginData[0].id}`)
     }
   }, [ loginData, navigate, dispatch ])
 
