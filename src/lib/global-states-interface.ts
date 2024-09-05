@@ -25,7 +25,7 @@ export interface activities {
   user_id: string,
   title: string,
   date: string,
-  isDone: boolean,
+  is_done: boolean,
   occurs_at: string,
   user: user
   agenda: agendas

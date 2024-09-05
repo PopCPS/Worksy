@@ -32,13 +32,14 @@ export const Nav = () => {
     if(hasError) {
       return
     }
-
     await api.post('/api/agenda', {
       title
     }, {
       withCredentials: true
+    }).then(response => {
+      navigate(`/${response.data}`)
+      closeAgendaModal()
     })
-
   }
 
   useEffect(() => {

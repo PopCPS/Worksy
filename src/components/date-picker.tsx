@@ -27,7 +27,7 @@ const Day = ({
         }
         dispatch(set_day(day))
       }}
-      className="flex items-center justify-center size-12 z-10 text-shadow cursor-pointer focus:outline-none"
+      className="flex items-center text-white justify-center size-12 z-10 cursor-pointer focus:outline-none"
     >
       {day}
     </span>
@@ -155,8 +155,8 @@ const Months = ({
   }, [monthContainer])
 
   return (
-    <div className="relative flex justify-center items-center rounded-3xl h-10 w-64 overflow-hidden bg-white">
-      <button className="absolute left-0 focus:outline-none" onClick={() => {scrollPreviousMonth(monthIndex)}}>
+    <div className="relative flex justify-center items-center rounded-3xl h-10 w-64 overflow-hidden bg-secondary-def">
+      <button className="absolute left-0 focus:outline-none text-white" onClick={() => {scrollPreviousMonth(monthIndex)}}>
         <ChevronLeft />
       </button>
       <div ref={monthContainer} className="flex min-w-full overflow-scroll no-scrollbar">
@@ -165,14 +165,14 @@ const Months = ({
             <span 
               key={index} 
               id={month} 
-              className="flex items-center justify-center min-w-64 font-bold text-xl focus:outline-none"
+              className="flex items-center text-white justify-center min-w-64 font-bold text-xl focus:outline-none"
             >
               {month}
             </span>
           )
         })}
       </div>
-      <button className="absolute right-0 focus:outline-none" onClick={() => {scrollNextMonth(monthIndex)}}>
+      <button className="absolute right-0 focus:outline-none text-white" onClick={() => {scrollNextMonth(monthIndex)}}>
         <ChevronRight />
       </button>
     </div>
@@ -186,8 +186,8 @@ export const DatePicker = () => {
   return (
     <div className="flex gap-6">
       <div className="py-2.5">
-        <div className="relative flex justify-center items-center rounded-3xl h-10 w-64 bg-white">
-          <div className="fixed flex justify-center items-center size-[60px] rounded-[50%] bg-secondary-def" />
+        <div className="relative flex justify-center items-center rounded-3xl h-10 w-64 bg-secondary-def">
+          <div className="fixed flex justify-center items-center size-[60px] rounded-[50%] bg-secondary-dark" />
           <Days 
             monthIndex={monthIndex}
           />

@@ -4,7 +4,7 @@ import { Button } from "./button"
 
 interface ModalProps {
   title: string
-  children: ReactNode
+  children?: ReactNode
   closeModal: () => void,
   submit: (event: FormEvent<HTMLFormElement>) => void
 }

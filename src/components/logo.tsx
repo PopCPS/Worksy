@@ -6,7 +6,7 @@ export const Logo = ({
   isPrimary
 }: LogoProps) => {
   return (
-    <div className="flex items-center justify-center h-[150px] w-fit">
+    <div className="flex items-center justify-center select-none h-[150px] w-fit">
       {isPrimary ? (
         <img className="" src="/logo-primary.svg" alt="Logo Worksy" />
       ) : (

@@ -40,7 +40,7 @@ export const Home = () => {
 
             <Header />
 
-            <main className="flex flex-col flex-1 w-full rounded-2xl p-6 gap-4 bg-secondary-def">
+            <main className="flex flex-col flex-1 w-full rounded-2xl p-6 gap-4 overflow-hidden bg-secondary-def">
 
               <TaskSection />
 
