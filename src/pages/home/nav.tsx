@@ -4,7 +4,7 @@ import { Logo } from "../../components/logo"
 import { useNavigate, useParams } from "react-router-dom"
 import { FormEvent, useEffect, useState } from "react"
 import { api } from "../../lib/axios"
-import { agendas } from "../../lib/global-states-interface"
+import { agenda } from "../../lib/global-states-interface"
 import { Modal } from "../../components/modal"
 import { Input } from "../../components/input"
 
@@ -12,7 +12,7 @@ export const Nav = () => {
 
   const navigate = useNavigate()
   const { agenda } = useParams()
-  const [ agendas, setAgendas ] = useState<agendas[] | null>(null)
+  const [ agendas, setAgendas ] = useState<agenda[] | null>(null)
   const [ isNavModalOpen, setIsNavModalOpen ] = useState<boolean>(false)
 
   const [ title, setTitle ] = useState<string | null>(null)

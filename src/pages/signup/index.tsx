@@ -4,7 +4,7 @@ import { Input } from "../../components/input"
 import { Logo } from "../../components/logo"
 import { useNavigate } from "react-router-dom"
 import { FormEvent, useEffect, useState } from "react"
-import { agendas } from "../../lib/global-states-interface"
+import { agenda } from "../../lib/global-states-interface"
 import { useAppDispatch } from "../../store/hooks"
 import { api } from "../../lib/axios"
 import { set_agendas } from "../../store/reducers/dataReducer"
@@ -14,7 +14,7 @@ export const Signup = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
-  const [ loginData, setLoginData ] = useState<agendas[] | null>(null)
+  const [ loginData, setLoginData ] = useState<agenda[] | null>(null)
 
   const [ name, setName ] = useState<string | null>(null)
   const [ email, setEmail ] = useState<string | null>(null)

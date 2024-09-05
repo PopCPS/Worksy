@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { IStates, agendas } from "../../lib/global-states-interface";
+import { IStates } from "../../lib/global-states-interface";
 import dayjs from "dayjs";
 
 const initialState: IStates = {
@@ -19,7 +19,8 @@ export const date = createSlice({
     set_month: (state, action: PayloadAction<number>) => {
       state.month = action.payload
     },
-    set_agendas: (state, action: PayloadAction<agendas[]>) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    set_agendas: (state, action: PayloadAction<any>) => {
       state.agendas = action.payload
     }
   }

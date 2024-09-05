@@ -1,13 +1,17 @@
 export interface IStates {
   day: number,
   month: number,
-  agendas: agendas | null
+  agendas: agenda | null
 }
 
-export interface agendas {
+export interface agenda {
     id: string,
     user_id: string,
     name: string
+}
+
+export interface agendas {
+  agendas: agenda[]
 }
 
 export interface user {
@@ -15,7 +19,7 @@ export interface user {
   name: string,
   email: string,
   image: string,
-  agenda: agendas[]
+  agendas: agenda[]
   activity: activities[]
 }
 
@@ -28,5 +32,5 @@ export interface activities {
   is_done: boolean,
   occurs_at: string,
   user: user
-  agenda: agendas
+  agenda: agenda
 }

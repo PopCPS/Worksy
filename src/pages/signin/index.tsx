@@ -7,14 +7,14 @@ import { FormEvent, useEffect, useState } from "react"
 import { api } from "../../lib/axios"
 import { useAppDispatch } from "../../store/hooks"
 import { set_agendas } from "../../store/reducers/dataReducer"
-import { agendas } from "../../lib/global-states-interface"
+import { agenda } from "../../lib/global-states-interface"
 
 export const Signin = () => {
 
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
-  const [ loginData, setLoginData ] = useState<agendas[] | null>(null)
+  const [ loginData, setLoginData ] = useState<agenda[] | null>(null)
   const [ email, setEmail ] = useState<string | null>(null)
   const [ password, setPassword ] = useState<string | null>(null)
   const [ isEmailError, setIsEmailError ] = useState<boolean>(false)
