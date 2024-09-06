@@ -7,6 +7,7 @@ const initialState: IStates = {
   day: Number(dayjs().format('D')),
   month: Number(dayjs().format('M')),
   agendas: null,
+  isNavOpen: true,
 }
 
 export const date = createSlice({
@@ -21,6 +22,9 @@ export const date = createSlice({
     },
     set_agendas: (state, action: PayloadAction<agenda[]>) => {
       state.agendas = action.payload
+    },
+    set_isNavOpen: (state, action: PayloadAction<boolean>) => {
+      state.isNavOpen = action.payload
     }
   }
 })
@@ -28,7 +32,8 @@ export const date = createSlice({
 export const {
   set_day,
   set_month,
-  set_agendas
+  set_agendas,
+  set_isNavOpen
 } = date.actions
 
 export default date.reducer

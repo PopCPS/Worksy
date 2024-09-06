@@ -1,4 +1,4 @@
-import { CheckCircle2, Circle, CircleX, Pencil, Plus, Search, Trash2 } from "lucide-react"
+import { CheckCircle2, Circle, CircleX, LoaderCircleIcon, Pencil, Plus, Search, Trash2 } from "lucide-react"
 import { useState, FormEvent, useEffect } from "react"
 import { Input } from "../../components/input"
 import { Modal } from "../../components/modal"
@@ -16,6 +16,7 @@ export const TaskSection = () => {
   const navigate = useNavigate()
 
   const [ reload, setReload ] = useState(false)
+  const [ isLoading, setIsLoading ] = useState(false)
 
   const [ isNewTaskModalOpen, setIsNewTaskModalOpen ] = useState(false)
   const [ isEditActivityModalOpen, setIsEditActivityModalOpen ] = useState(false)
@@ -76,6 +77,8 @@ export const TaskSection = () => {
       return
     }
 
+    setIsLoading(true)
+
     await api.post('/api/activities', {
       title,
       agenda: selectedAgendaId,
@@ -84,12 +87,15 @@ export const TaskSection = () => {
       withCredentials: true
     }).then(() => {
       setReload(!reload)
+      setIsLoading(false)
+      setIsNewTaskModalOpen(false)
     })
 
   }
 
   const deleteAgenda = async (agendaId: string, event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setIsLoading(true)
     await api.delete(`/api/agenda/${agendaId}`, {
       withCredentials: true,
     }).then(response => {
@@ -97,17 +103,20 @@ export const TaskSection = () => {
       console.log(response.data)
       dispatch(set_agendas(response.data))
       sessionStorage.setItem('agendas', JSON.stringify(response.data))
+      setIsLoading(false)
       navigate(`/${response.data[0].id}`)
     })
   }
 
   const deleteActivity = async (activityId: string, event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setIsLoading(true)
     await api.delete(`/api/activities/${activityId}`, {
       withCredentials: true,
     }).then(() => {
       setReload(!reload)
       setIsDeleteActivityModalOpen(false)
+      setIsLoading(false)
     })
   }
 
@@ -127,6 +136,7 @@ export const TaskSection = () => {
 
   const patchActivity = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setIsLoading(true)
     setTitle(null)
     setHour(null)
     if(activity) {
@@ -138,6 +148,8 @@ export const TaskSection = () => {
         occurs_at: `${activity.date}T${hour ? hour : dayjs(activity.occurs_at).format('HH:mm')}`,
       }).then(() => {
         setReload(!reload)
+        setIsLoading(false)
+        setIsEditActivityModalOpen(false)
       })
     }
   }
@@ -164,29 +176,34 @@ export const TaskSection = () => {
 
   return (
     <>
-      <div className="flex max-h-screen justify-between">
-        <button>
-          <Plus 
-            size={40} 
-            strokeWidth={1} 
-            className="text-white" 
-            onClick={() => {
-              setSelectedAgendaId(agenda)
-              setIsNewTaskModalOpen(true)
-            }}
-          />
-        </button>
-        <div className="flex gap-4">
+      {isLoading && (
+        <div className="inset-0 fixed z-50 flex items-center justify-center bg-secondary-dark/60">
+          <LoaderCircleIcon size={60} className="animate-spin text-primary" />
+        </div>
+      )}
+      <div className="flex flex-col sm:flex-row max-h-screen justify-between gap-x-4 gap-y-2">
+        <div className="flex flex-1 justify-between">
+          <button>
+            <Plus 
+              size={40} 
+              strokeWidth={1} 
+              className="text-white" 
+              onClick={() => {
+                setSelectedAgendaId(agenda)
+                setIsNewTaskModalOpen(true)
+              }}
+            />
+          </button>
           <button onClick={() => setIsDeleteAgendaModalOpen(true)}>
             <Trash2 className="text-danger" />
           </button>
-          <Input 
-            placeholder="Buscar"
-            onChange={e => setSearch(e.currentTarget.value)}
-          >
-            <Search className="text-white" />
-          </Input>
         </div>
+        <Input 
+          placeholder="Buscar"
+          onChange={e => setSearch(e.currentTarget.value)}
+        >
+          <Search className="text-white" />
+        </Input>
       </div>
 
       <div className="h-px w-full bg-primary" />
@@ -195,24 +212,24 @@ export const TaskSection = () => {
         {activities && activities.length > 0 ? activities.map(activity => {
             return (
             <div key={activity.id} className="w-full group">
-              <div className="flex items-center justify-between px-5 w-full h-16 bg-primary rounded-2xl">
-                <span className="text-2xl">
+              <div className="flex flex-col sm:flex-row items-center justify-between p-5 sm:px-5 w-full sm:h-16 bg-primary rounded-2xl">
+                <span className="block w-full text-2xl self-start truncate">
                   {activity.title}
                 </span>
-                <div className="flex gap-4 transition-all ">
+                <div className="flex gap-4 justify-between w-full sm:w-auto transition-all ">
                   <button onClick={() => {
                     setIsEditActivityModalOpen(true)
                     setActivity(activity)
                   }}>
-                    <Pencil className="invisible scale-0 transition ease-in-out group-hover:visible group-hover:scale-100 focus:outline-none text-secondary-dark" />
+                    <Pencil className="sm:invisible sm:scale-0 transition ease-in-out group-hover:visible group-hover:scale-100 focus:outline-none text-secondary-dark" />
                   </button>
                   <button onClick={() => {
                     setIsDeleteActivityModalOpen(true)
                     setActivity(activity)
                   }}>
-                    <Trash2 className="invisible scale-0 transition ease-in-out group-hover:visible group-hover:scale-100 focus:outline-none text-danger" />
+                    <Trash2 className="sm:invisible sm:scale-0 transition ease-in-out group-hover:visible group-hover:scale-100 focus:outline-none text-danger" />
                   </button>
-                  <span className="text-right">
+                  <span className="text-right -order-1 sm:order-none">
                     {dayjs(activity.occurs_at).format('HH:mm')}
                   </span>
                   <button onClick={() => handleIsActivityDone(activity.id, activity.is_done)}>
@@ -323,7 +340,7 @@ export const TaskSection = () => {
 
       {isDeleteAgendaModalOpen && agenda && (
         <Modal
-          title={`Tem certeza que quer apagar esta agenda??`}
+          title={`Tem certeza que quer apagar esta agenda?`}
           closeModal={closeDeleteAgendaModal}
           submit={(e) => deleteAgenda(agenda, e)}
         >

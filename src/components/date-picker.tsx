@@ -155,11 +155,11 @@ const Months = ({
   }, [monthContainer])
 
   return (
-    <div className="relative flex justify-center items-center rounded-3xl h-10 w-64 overflow-hidden bg-secondary-def">
+    <div className="relative flex justify-center items-center rounded-3xl h-10 w-64 overflow-hidden no-scrollbar bg-secondary-def">
       <button className="absolute left-0 focus:outline-none text-white" onClick={() => {scrollPreviousMonth(monthIndex)}}>
         <ChevronLeft />
       </button>
-      <div ref={monthContainer} className="flex min-w-full overflow-scroll no-scrollbar">
+      <div ref={monthContainer} className="flex min-w-full overflow-hidden no-scrollbar">
         {months.map((month, index) => {
           return (
             <span 
@@ -184,7 +184,7 @@ export const DatePicker = () => {
   const [ monthIndex, setMonthIndex ] = useState<number>(Number(dayjs().format('M')) - 1)
 
   return (
-    <div className="flex gap-6">
+    <div className="flex flex-col sm:flex-row gap-3 sm:gap-6">
       <div className="py-2.5">
         <div className="relative flex justify-center items-center rounded-3xl h-10 w-64 bg-secondary-def">
           <div className="fixed flex justify-center items-center size-[60px] rounded-[50%] bg-secondary-dark" />

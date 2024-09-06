@@ -2,6 +2,7 @@ export interface IStates {
   day: number,
   month: number,
   agendas: agenda[] | null
+  isNavOpen: boolean
 }
 export interface agenda {
     id: string,

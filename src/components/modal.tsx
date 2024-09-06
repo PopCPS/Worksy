@@ -17,9 +17,9 @@ export const Modal = ({
 }: ModalProps) => {
   return (
     <div className="inset-0 fixed flex items-center justify-center z-30 bg-secondary-def/60">
-      <div className="w-[600px] p-4 rounded-2xl bg-primary">
+      <div className="w-96 sm:w-[600px] p-4 rounded-2xl bg-primary">
         <div className="size-full space-y-2.5 p-4 rounded-2xl bg-secondary-def">
-          <div className="flex justify-between">
+          <div className="flex justify-between gap-2">
             <span className="text-xl text-white">{title}</span>
             <button onClick={closeModal}>
               <X size={24} className="text-white" />

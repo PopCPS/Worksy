@@ -1,4 +1,4 @@
-import { Lock, Mail } from "lucide-react"
+import { LoaderCircle, Lock, Mail } from "lucide-react"
 import { Button } from "../../components/button"
 import { Input } from "../../components/input"
 import { Logo } from "../../components/logo"
@@ -8,11 +8,15 @@ import { api } from "../../lib/axios"
 import { useAppDispatch } from "../../store/hooks"
 import { set_agendas } from "../../store/reducers/dataReducer"
 import { agenda } from "../../lib/global-states-interface"
+import axios, { AxiosError } from "axios"
 
 export const Signin = () => {
 
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+
+  const [ isLoading, setIsLoading ] = useState(false)
+  const [ errorMessage, setErrorMessage ] = useState<string | null>(null)
 
   const [ loginData, setLoginData ] = useState<agenda[] | null>(null)
   const [ email, setEmail ] = useState<string | null>(null)
@@ -29,7 +33,8 @@ export const Signin = () => {
   const signin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     isFormError = false
-
+    setIsLoading(true)
+    
     if(!email) {
       setIsEmailError(true)
       isFormError = true
@@ -40,16 +45,20 @@ export const Signin = () => {
     }
 
     if(isFormError) {
+      setIsLoading(false)
       return
     }
-    
+
     await api.post('/api/login', {
       email,
       password  
     }).then(response => {
       setLoginData(response.data.agendas)
-    }).catch(error => {
-      console.log(error)
+    }).catch((error: Error | AxiosError) => {
+      setIsLoading(false)
+      if (axios.isAxiosError(error))  {
+        setErrorMessage(error.response?.data.error) 
+      }
     })
   }
 
@@ -58,17 +67,30 @@ export const Signin = () => {
       console.log(loginData)
       dispatch(set_agendas(loginData))
       sessionStorage.setItem('agendas', JSON.stringify(loginData))
+      setIsLoading(false)
       navigate(`/${loginData[0].id}`)
     }
   }, [ loginData, navigate, dispatch ])
 
   return (
-    <div className="flex items-center justify-center w-screen h-screen bg-secondary-def">
-      <div className="h-[632px] w-[392px] p-4 rounded-2xl bg-primary">
-        <div className="flex flex-col justify-center items-center gap-10 h-full w-full rounded-2xl px-4 bg-secondary-def">
+    <div className="flex items-center justify-center w-screen h-screen bg-primary sm:bg-secondary-def">
+      <div className="sm:h-[660px] sm:w-[392px] sm:p-4 rounded-2xl bg-primary">
+        <div className="relative flex flex-col justify-center items-center gap-10 h-full w-full rounded-2xl p-4 bg-secondary-def">
+
+        {isLoading && (
+          <div className="absolute flex items-center justify-center size-full rounded-2xl bg-secondary-dark/60">
+            <LoaderCircle size={40} className="animate-spin text-primary" />
+          </div>
+        )}
+
           <Logo isPrimary={true} />
           <form onSubmit={e => signin(e)} className="flex flex-col items-center justify-center gap-6">
             <div className="space-y-2.5 text-white">
+              {errorMessage && (
+                <div className="flex justify-center">
+                  <span className="text-center text-danger">{errorMessage}</span>
+                </div>
+              )}
               <Input 
                 onChange={e => setEmail(e.currentTarget.value)} 
                 onFocus={() => setIsEmailError(false)}
@@ -92,7 +114,7 @@ export const Signin = () => {
               <Button width="small">
                 Login
               </Button>
-              <Button onClick={navToSignup} variant="secondaryDark" width="small">
+              <Button onClick={navToSignup} type="button" variant="secondaryDark" width="small">
                 Cadastro
               </Button>
             </div>

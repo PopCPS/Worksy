@@ -10,7 +10,7 @@ const inputVariants = tv({
       false: 'border border-secondary-dark',
     },
     wide: {
-      default: 'w-[328px]',
+      default: 'w-full sm:w-[328px] ',
       small: 'w-36',
       full: 'w-full'
     },

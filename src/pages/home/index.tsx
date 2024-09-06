@@ -32,8 +32,8 @@ export const Home = () => {
 
   return (
     <>
-      <div className="flex itesm justify-center h-screen w-screen p-6 bg-secondary-def">
-        <div className="flex h-full w-[1440px] p-6 gap-6 rounded-2xl bg-primary">
+      <div className="flex itesm justify-center h-screen w-screen sm:p-6 bg-secondary-def">
+        <div className="flex h-full 2xl:w-[1440px] p-6 gap-6 sm:rounded-2xl bg-primary">
           
           <Nav />
 
