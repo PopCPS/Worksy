@@ -73,6 +73,10 @@ export const TaskSection = () => {
       setTitleError(true)
       hasError = true
     }
+    if(title && title.length < 3) {
+      setTitleError(true)
+      hasError = true
+    }
     if(hasError) {
       return
     }
@@ -181,7 +185,7 @@ export const TaskSection = () => {
           <LoaderCircleIcon size={60} className="animate-spin text-primary" />
         </div>
       )}
-      <div className="flex flex-col sm:flex-row max-h-screen justify-between gap-x-4 gap-y-2">
+      <div className="flex flex-col max-h-screen justify-between gap-x-4 gap-y-2 sm:flex-row">
         <div className="flex flex-1 justify-between">
           <button>
             <Plus 
@@ -194,9 +198,11 @@ export const TaskSection = () => {
               }}
             />
           </button>
-          <button onClick={() => setIsDeleteAgendaModalOpen(true)}>
-            <Trash2 className="text-danger" />
-          </button>
+          {agendas && agendas.length > 1 && (
+            <button onClick={() => setIsDeleteAgendaModalOpen(true)}>
+              <Trash2 className="text-danger" />
+            </button>
+          )}
         </div>
         <Input 
           placeholder="Buscar"
@@ -208,26 +214,26 @@ export const TaskSection = () => {
 
       <div className="h-px w-full bg-primary" />
 
-      <div className="flex flex-col gap-y-4 overflow-x-hidden pr-2 overflow-y-scroll">
+      <div className="flex flex-col justify-center gap-y-4 overflow-x-hidden pr-2 overflow-y-scroll">
         {activities && activities.length > 0 ? activities.map(activity => {
             return (
             <div key={activity.id} className="w-full group">
-              <div className="flex flex-col sm:flex-row items-center justify-between p-5 sm:px-5 w-full sm:h-16 bg-primary rounded-2xl">
+              <div className="flex flex-col items-center justify-between p-5 w-full bg-primary rounded-2xl sm:flex-row sm:px-5">
                 <span className="block w-full text-2xl self-start truncate">
                   {activity.title}
                 </span>
-                <div className="flex gap-4 justify-between w-full sm:w-auto transition-all ">
+                <div className="flex gap-4 justify-between w-full transition-all sm:w-auto">
                   <button onClick={() => {
                     setIsEditActivityModalOpen(true)
                     setActivity(activity)
                   }}>
-                    <Pencil className="sm:invisible sm:scale-0 transition ease-in-out group-hover:visible group-hover:scale-100 focus:outline-none text-secondary-dark" />
+                    <Pencil className="transition ease-in-out group-hover:visible group-hover:scale-100 focus:outline-none text-secondary-dark sm:invisible sm:scale-0" />
                   </button>
                   <button onClick={() => {
                     setIsDeleteActivityModalOpen(true)
                     setActivity(activity)
                   }}>
-                    <Trash2 className="sm:invisible sm:scale-0 transition ease-in-out group-hover:visible group-hover:scale-100 focus:outline-none text-danger" />
+                    <Trash2 className="transition ease-in-out group-hover:visible group-hover:scale-100 focus:outline-none text-danger sm:invisible sm:scale-0" />
                   </button>
                   <span className="text-right -order-1 sm:order-none">
                     {dayjs(activity.occurs_at).format('HH:mm')}

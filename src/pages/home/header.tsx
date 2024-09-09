@@ -18,7 +18,7 @@ export const Header = () => {
 
   return (
     <header className="relative flex flex-col sm:flex-row items-center justify-evenly md:justify-between px-5">
-      <button onClick={openNav} className="absolute left-1 md:hidden">
+      <button onClick={openNav} className="absolute left-1 sm:static lg:hidden">
         <ChevronRight size={40} className="text-secondary-def" />
       </button>
       <DatePicker></DatePicker>
