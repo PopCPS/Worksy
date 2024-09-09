@@ -1,50 +1,54 @@
-# React + TypeScript + Vite
+# Worksy
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Worksy é uma agenda feita com ReactJS, Tailwind CSS e TypeScript.
 
-Currently, two official plugins are available:
+## Preparando o projeto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Siga estas intruções para rodar o projeto localmente
 
-## Expanding the ESLint configuration
+### Pré-requisitos
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Node.js
+- npm ou yarn
 
-- Configure the top-level `parserOptions` property like this:
+### Clone os repositórios
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+1. **Clone o repositório do front end:**
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+   ```bash
+   git clone https://github.com/PopCPS/Worksy.git
+   cd Worksy
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. **Em outra pasta clone o repositório do back end:**
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+   ```bash
+   git clone https://github.com/PopCPS/worksy-server.git
+   cd worksy-server
+
+### Configure o back end
+
+1. **Renomeie o .env.example para .env:**
+
+   ```bash
+   mv .env.example .env
+
+### Instale as dependencias e rode o projeto
+
+1. **Instale as dependencias do frontend:**
+
+   ```bash
+   npm i
+   npm run dev
+
+2. **Instale as dependencias do backend:**
+
+   ```bash
+   npm i
+   npm run dev
+
+### Acesse a aplicação
+
+## Enquanto ambos projetos estiverem rodadando, acesse em http://localhost:5173.
+
+
+   
